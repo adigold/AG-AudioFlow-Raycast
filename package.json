@@ -76,6 +76,12 @@
       "title": "Setup Ffmpeg",
       "description": "Check FFmpeg installation and get setup instructions",
       "mode": "view"
+    },
+    {
+      "name": "about",
+      "title": "About AG AudioFlow",
+      "description": "Learn about AG AudioFlow, its features, and the story behind this extension",
+      "mode": "view"
     }
   ],
   "dependencies": {
