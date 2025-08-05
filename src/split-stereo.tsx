@@ -9,8 +9,7 @@ import {
   popToRoot,
 } from "@raycast/api";
 import { useState, useEffect } from "react";
-import { AudioProcessor } from "./utils/audioProcessor";
-import path from "path";
+import { AudioProcessor, AudioInfo } from "./utils/audioProcessor";
 
 interface FormValues {
   inputFile: string[];
@@ -21,7 +20,7 @@ interface FormValues {
 export default function SplitStereo() {
   const [selectedFile, setSelectedFile] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
-  const [audioInfo, setAudioInfo] = useState<any>(null);
+  const [audioInfo, setAudioInfo] = useState<AudioInfo | null>(null);
 
   useEffect(() => {
     async function loadSelectedFile() {
@@ -104,7 +103,7 @@ export default function SplitStereo() {
         return;
       }
 
-      const result = await AudioProcessor.splitStereoToMono({
+      await AudioProcessor.splitStereoToMono({
         inputPath: values.inputFile[0],
         outputDirectory: values.outputDirectory[0],
         outputBaseName: values.outputBaseName || undefined,

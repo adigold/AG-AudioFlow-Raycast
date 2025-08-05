@@ -127,7 +127,7 @@ export default function BatchProcess() {
           let suffix: string;
 
           switch (values.operation) {
-            case "convert":
+            case "convert": {
               suffix = `converted`;
               const extension = values.outputFormat
                 ? `.${values.outputFormat}`
@@ -140,12 +140,19 @@ export default function BatchProcess() {
               await AudioProcessor.convertAudio({
                 inputPath: inputFile,
                 outputPath,
-                format: (values.outputFormat as any) || "mp3",
+                format:
+                  (values.outputFormat as
+                    | "mp3"
+                    | "aac"
+                    | "wav"
+                    | "flac"
+                    | "ogg") || "mp3",
                 bitrate: values.bitrate,
               });
               break;
+            }
 
-            case "trim":
+            case "trim": {
               suffix = "trimmed";
               outputPath = path.join(
                 values.outputDirectory[0],
@@ -163,8 +170,9 @@ export default function BatchProcess() {
                   : -50,
               });
               break;
+            }
 
-            case "fade":
+            case "fade": {
               suffix = "faded";
               outputPath = path.join(
                 values.outputDirectory[0],
@@ -182,8 +190,9 @@ export default function BatchProcess() {
                   : undefined,
               });
               break;
+            }
 
-            case "normalize":
+            case "normalize": {
               suffix = "normalized";
               outputPath = path.join(
                 values.outputDirectory[0],
@@ -198,8 +207,9 @@ export default function BatchProcess() {
                   : -23,
               });
               break;
+            }
 
-            case "volume":
+            case "volume": {
               const volumeChange = values.volumeChange
                 ? Number(values.volumeChange)
                 : 0;
@@ -220,8 +230,9 @@ export default function BatchProcess() {
                 useGain: values.useGain || false,
               });
               break;
+            }
 
-            case "stereo-to-mono":
+            case "stereo-to-mono": {
               const methodSuffix =
                 values.mixMethod === "mix"
                   ? "mono"
@@ -238,8 +249,9 @@ export default function BatchProcess() {
                 mixMethod: values.mixMethod as "mix" | "left" | "right",
               });
               break;
+            }
 
-            case "speed":
+            case "speed": {
               const speedPercentage = values.speedPercentage
                 ? Number(values.speedPercentage)
                 : 100;
@@ -257,6 +269,7 @@ export default function BatchProcess() {
                 preservePitch: values.preservePitch || false,
               });
               break;
+            }
 
             default:
               throw new Error(`Unknown operation: ${values.operation}`);

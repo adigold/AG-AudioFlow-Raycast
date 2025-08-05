@@ -5,7 +5,6 @@ import {
   showToast,
   Toast,
   Clipboard,
-  openExtensionPreferences,
 } from "@raycast/api";
 import { useState, useEffect } from "react";
 import { AudioProcessor } from "./utils/audioProcessor";
@@ -106,7 +105,7 @@ sudo port install ffmpeg
                 onAction={copyInstallCommand}
               />
               <Action.OpenInBrowser
-                title="Visit FFmpeg Website"
+                title="Visit Ffmpeg Website"
                 url="https://ffmpeg.org/download.html"
               />
             </>

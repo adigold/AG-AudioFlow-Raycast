@@ -18,7 +18,6 @@ interface AudioInfoItem {
 }
 
 export default function AudioInfo() {
-  const [audioFiles, setAudioFiles] = useState<string[]>([]);
   const [audioInfoItems, setAudioInfoItems] = useState<AudioInfoItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,7 +55,6 @@ export default function AudioInfo() {
         return;
       }
 
-      setAudioFiles(audioFiles);
       await loadAudioInfo(audioFiles);
     } catch (error) {
       showToast({

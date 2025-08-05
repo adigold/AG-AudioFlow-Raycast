@@ -249,7 +249,7 @@ export class AudioProcessor {
     const audioInfo = await this.getAudioInfo(options.inputPath);
 
     return new Promise((resolve, reject) => {
-      let filters: string[] = [];
+      const filters: string[] = [];
 
       if (options.fadeInDuration && options.fadeInDuration > 0) {
         filters.push(`afade=t=in:ss=0:d=${options.fadeInDuration}`);
@@ -332,38 +332,34 @@ export class AudioProcessor {
   static async getAudioInfo(filePath: string): Promise<AudioInfo> {
     this.initializeFFmpeg();
 
-    return new Promise(async (resolve, reject) => {
-      try {
-        const stats = await fs.stat(filePath);
+    const stats = await fs.stat(filePath);
 
-        ffmpeg.ffprobe(filePath, (err, metadata) => {
-          if (err) {
-            reject(err);
-            return;
-          }
+    return new Promise((resolve, reject) => {
+      ffmpeg.ffprobe(filePath, (err, metadata) => {
+        if (err) {
+          reject(err);
+          return;
+        }
 
-          const audioStream = metadata.streams.find(
-            (stream) => stream.codec_type === "audio",
-          );
-          if (!audioStream) {
-            reject(new Error("No audio stream found"));
-            return;
-          }
+        const audioStream = metadata.streams.find(
+          (stream) => stream.codec_type === "audio",
+        );
+        if (!audioStream) {
+          reject(new Error("No audio stream found"));
+          return;
+        }
 
-          resolve({
-            duration: metadata.format.duration || 0,
-            bitrate: metadata.format.bit_rate
-              ? metadata.format.bit_rate.toString()
-              : "Unknown",
-            sampleRate: audioStream.sample_rate || 0,
-            channels: audioStream.channels || 0,
-            format: metadata.format.format_name || "Unknown",
-            size: stats.size,
-          });
+        resolve({
+          duration: metadata.format.duration || 0,
+          bitrate: metadata.format.bit_rate
+            ? metadata.format.bit_rate.toString()
+            : "Unknown",
+          sampleRate: audioStream.sample_rate || 0,
+          channels: audioStream.channels || 0,
+          format: metadata.format.format_name || "Unknown",
+          size: stats.size,
         });
-      } catch (statError) {
-        reject(statError);
-      }
+      });
     });
   }
 
@@ -375,7 +371,6 @@ export class AudioProcessor {
           : `${options.volumeChange}dB`;
 
       // Use volume filter for general volume adjustment or gain filter for more precise control
-      const filterName = options.useGain ? "volume" : "volume";
       const filter = options.useGain
         ? `volume=${Math.pow(10, options.volumeChange / 20)}` // Convert dB to linear scale for gain
         : `volume=${volumeChangeStr}`;
@@ -566,7 +561,7 @@ export class AudioProcessor {
       const speedFactor = options.speedPercentage / 100;
 
       // Use atempo filter for speed adjustment
-      let audioFilters: string[] = [];
+      const audioFilters: string[] = [];
 
       if (options.preservePitch) {
         // Use atempo filter which preserves pitch but changes tempo
@@ -589,7 +584,6 @@ export class AudioProcessor {
         }
       } else {
         // Use asetrate and aresample for speed change that affects pitch
-        const inputInfo = this.getAudioInfo(options.inputPath);
         audioFilters.push(
           `asetrate=${Math.round(44100 * speedFactor)},aresample=44100`,
         );

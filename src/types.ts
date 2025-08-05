@@ -16,7 +16,7 @@ export interface BatchProcessingOptions {
   files: AudioFile[];
   operation: "convert" | "trim" | "fade" | "normalize";
   outputDirectory: string;
-  options: any;
+  options: Record<string, unknown>;
 }
 
 export const SUPPORTED_AUDIO_FORMATS = [

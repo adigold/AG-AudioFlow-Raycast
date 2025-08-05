@@ -9,7 +9,7 @@ import {
   popToRoot,
 } from "@raycast/api";
 import { useState, useEffect } from "react";
-import { AudioProcessor } from "./utils/audioProcessor";
+import { AudioProcessor, AudioInfo } from "./utils/audioProcessor";
 import path from "path";
 
 interface FormValues {
@@ -22,7 +22,7 @@ interface FormValues {
 export default function AdjustVolume() {
   const [selectedFile, setSelectedFile] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
-  const [audioInfo, setAudioInfo] = useState<any>(null);
+  const [audioInfo, setAudioInfo] = useState<AudioInfo | null>(null);
 
   useEffect(() => {
     async function loadSelectedFile() {

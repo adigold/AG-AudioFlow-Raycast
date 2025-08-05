@@ -4,7 +4,7 @@
   "title": "AG AudioFlow",
   "description": "Professional audio editing and processing suite with advanced features",
   "icon": "icon.png",
-  "author": "adigoldstein",
+  "author": "adigold1",
   "categories": [
     "Media",
     "Productivity"
@@ -73,7 +73,7 @@
     },
     {
       "name": "setup-ffmpeg",
-      "title": "Setup FFmpeg",
+      "title": "Setup Ffmpeg",
       "description": "Check FFmpeg installation and get setup instructions",
       "mode": "view"
     }
