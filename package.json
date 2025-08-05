@@ -76,7 +76,9 @@
       "title": "Setup Ffmpeg",
       "description": "Check FFmpeg installation and get setup instructions",
       "mode": "view"
-    },
+    }
+  ],
+  "actions": [
     {
       "name": "about",
       "title": "About AG AudioFlow",
